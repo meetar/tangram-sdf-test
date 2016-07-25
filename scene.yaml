@@ -1,0 +1,60 @@
+textures:
+    pois:
+        url: images/sdf3.png
+        filtering: mipmap
+
+styles:
+    icons:
+        base: points
+        texcoords: true
+        texture: pois
+        shaders:
+            uniforms:
+                u_texture: images/sdf4.png
+                u_color: [0., 0., 0.]
+                u_SmoothCenter: .5
+                u_SmoothWidth: .5
+            blocks:
+                color: |
+                    float SmoothCenter = 0.61;
+                    float SmoothWidth = 0.01;
+
+                    vec4 texcolor = texture2D(u_texture, v_texcoord);
+                    float distance = texcolor.r;
+                    float alpha = smoothstep(SmoothCenter - SmoothWidth,
+                                     SmoothCenter + SmoothWidth,
+                                     distance);
+                    color = vec4(u_color, 1.0 - alpha);
+
+                    // float smoothWidth = fwidth(distance);
+                    // float alpha = smoothstep(SmoothCenter - smoothWidth, SmoothCenter + smoothWidth, distance);
+                    // color.rgba = vec4(u_color, alpha);
+
+
+
+sources:
+    osm:
+        type: TopoJSONTiles
+        url:  http://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-HqUVidw
+
+layers:
+    earth:
+        data: { source: osm }
+        draw:
+            polygons:
+                order: 0
+                color: '#f0ebeb'
+  
+    water:
+        data: { source: osm }
+        draw:
+            polygons:
+                order: 3
+                color: '#9dc3de'
+
+    sdf-icons:
+        data: { source: osm, layer: pois }
+        draw:
+            icons:
+                collide: true
+                size: 250px
