@@ -33,29 +33,29 @@ styles:
 
 
 sources:
-    osm:
+    mapzen:
         type: TopoJSON
-        url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson
+        url:  https://ile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson
         url_params:
             api_key: vector-tiles-HqUVidw
 
 layers:
     earth:
-        data: { source: osm }
+        data: { source: mapzen }
         draw:
             polygons:
                 order: 0
                 color: '#f0ebeb'
   
     water:
-        data: { source: osm }
+        data: { source: mapzen }
         draw:
             polygons:
                 order: 3
                 color: '#9dc3de'
 
     sdf-icons:
-        data: { source: osm, layer: pois }
+        data: { source: mapzen, layer: pois }
         draw:
             icons:
                 collide: true
