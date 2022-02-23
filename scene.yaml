@@ -1,6 +1,11 @@
 textures:
     pois:
+        ## higher resolution:
         url: images/sdf3.png
+
+        ## lower resolution:
+        # url: images/sdf4.png
+
         filtering: mipmap
 
 styles:
@@ -10,14 +15,15 @@ styles:
         texture: pois
         shaders:
             uniforms:
-                u_texture: images/sdf4.png
+                ## this uniform is set automatically by the texture specified above
+                # u_texture: images/sdf3.png
                 u_color: [0., 0., 0.]
                 u_SmoothCenter: .5
                 u_SmoothWidth: .5
             blocks:
                 color: |
-                    float SmoothCenter = 0.61;
-                    float SmoothWidth = 0.01;
+                    float SmoothCenter = 0.62;
+                    float SmoothWidth = 0.005;
 
                     vec4 texcolor = texture2D(u_texture, v_texcoord);
                     float distance = texcolor.r;
@@ -34,10 +40,11 @@ styles:
 
 sources:
     mapzen:
-        type: TopoJSON
-        url:  https://ile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson
+        type: MVT
+        url:  https://tile.nextzen.org/tilezen/vector/v1/512/all/{z}/{x}/{y}.mvt
+
         url_params:
-            api_key: vector-tiles-HqUVidw
+            api_key: d161Q8KATMOhSOcVGNyQ8g
 
 layers:
     earth:
